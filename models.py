@@ -10,6 +10,7 @@ class Publisher(Base):
     id = sq.Column(sq.Integer, primary_key=True)
     name = sq.Column(sq.String(length=40), unique=True)
 
+
 class Book(Base):
     __tablename__ = "book"
 
@@ -18,6 +19,7 @@ class Book(Base):
     publisher_id = sq.Column(sq.Integer, sq.ForeignKey("publisher.id"), nullable=False)
 
     publisher = relationship(Publisher, backref="books")
+
 
 class Shop(Base):
     __tablename__ = "shop"
@@ -37,6 +39,7 @@ class Stock(Base):
     book = relationship(Book, backref="stock_b")
     shop = relationship(Shop, backref="stock_s")
 
+
 class Sale(Base):
     __tablename__ = "sale"
 
@@ -48,10 +51,7 @@ class Sale(Base):
 
     stock = relationship(Stock, backref="sales")
 
+
 def create_table(engine):
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
-
-
-
-
