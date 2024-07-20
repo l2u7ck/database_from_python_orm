@@ -78,6 +78,7 @@ session.add_all([sale1, sale2, sale3, sale4, sale5, sale6, sale7, sale8, sale9])
 session.commit()
 
 
+# Search by publisher and id
 def get_shops(data_author):
 
     # Merge all tables and selection by publisher
