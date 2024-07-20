@@ -81,29 +81,24 @@ session.commit()
 def get_shops(data_author):
 
     # Merge all tables and selection by publisher
-    query = (session.query(..., ..., ..., ...,).select_from(m.Shop).
-             join(m.Sale.stock).
+    query = (session.query(m.Book.title, m.Shop.name, m.Sale.price, m.Sale.date_sale).select_from(m.Shop).
+             join(m.Stock).
              join(m.Stock.book).
              join(m.Book.publisher).
              join(m.Sale))
 
+    # Information output
     if data_author.isdigit():
         author = query.filter(m.Publisher.id == data_author).all()
     else:
-        author = query.filter( m.Publisher.name == data_author ).all()
+        author = query.filter(m.Publisher.name == data_author).all()
     for title, shop, cost, date in author:
-        print(f"{title: <40} | {shop: <10} | {cost: <8} | {date.strftime('%d-%m-%Y')}")
-
-        # Information output
-    for st in query:
-        for s in st.sales:
-            print(f'{st.book.title.ljust(20)} | {st.shop.name.ljust(15)} | '
-                  f'{str(s.price).ljust(5)} | {s.date_sale}')
+        print(f"{title: <30} | {shop: <15} | {cost: <8} | {date.strftime('%d-%m-%Y')}")
 
 
 if __name__ == '__main__':
 
-    # Publisher input - valid names(Пушкин, Tолстой)
+    # Publisher input - valid names(Пушкин, Tолстой) or id(1,2)
     data_author = input("Enter the publisher's name or id:")
     get_shops(data_author)
 
